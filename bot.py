@@ -1,19 +1,20 @@
-import logging
-from pyrogram import Client, idle
-from Config import Config
-
-plugins = dict(
-        root="plugins"
-         )
-
+from pyrogram import Client, filters
+from pyrogram.errors import BadRequest
+import asyncio
+api_id = ""
+api_hash = ""
+bot_token = ""
 app = Client(
-     'ForceSubscribeRobot',
-      bot_token = Config.BOT_TOKEN,
-      api_id = Config.APP_ID,
-      api_hash = Config.API_HASH,
-      plugins=plugins
+        "my_bot",
+        api_id = api_id, api_hash = api_hash,
+        bot_token = bot_token
 )
-
-app.start()
-idle()
-app.stop()
+@app.on_message(filters.photo | filters.animation | filters.video | filters.docu
+ment)
+async def fwd(bot,message):
+        try:
+                await asyncio.sleep(5)
+                await message.forward(chanelid)
+        except BadRequest as e:
+                print("error : " + str(e))
+app.run()
